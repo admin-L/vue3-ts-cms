@@ -14,9 +14,9 @@ import IRequest from '@/service'
 const app = createApp(App)
 
 app.use(store)
+setupStore()
 app.use(router)
 app.use(ElementPlus)
-setupStore()
 app.mount('#app')
 
 // IRequest.request({

@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="search">
-      <IForm v-bind="searchFormConfig"></IForm>
+      <IForm v-bind="searchFormConfig" v-model="formData"></IForm>
       <!-- <el-form label-width="100px">
         <el-row>
           <el-col :span="8">
@@ -34,19 +34,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import IForm from '@/base-ui/form'
-import { searchFormConfig } from './config/search.config'
+import { defineComponent, ref } from "vue";
+import IForm from "@/base-ui/form";
+import { searchFormConfig } from "./config/search.config";
 
 export default defineComponent({
-  name: 'user',
+  name: "user",
   components: {
     IForm,
   },
   setup() {
-    return { searchFormConfig }
+    const formData = ref({
+      id: "",
+      name: "",
+      password: "",
+      sport: "",
+      createTime: "",
+    });
+    return { searchFormConfig, formData };
   },
-})
+});
 </script>
 
 <style scoped></style>
