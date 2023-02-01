@@ -1,4 +1,7 @@
 <template>
+  <div class="header">
+    <slot name="header"></slot>
+  </div>
   <el-form class="form" :label-width="labelWidth">
     <el-row>
       <!-- <el-col :span="8">
@@ -48,6 +51,9 @@
       </template>
     </el-row>
   </el-form>
+  <div class="footer">
+    <slot name="footer"></slot>
+  </div>
 </template>
 
 <script lang="ts">
