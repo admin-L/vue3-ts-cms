@@ -4,7 +4,17 @@
       <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
     </div>
     <div class="content">
-      <ITable :listData="userList" :propList="propList"></ITable>
+      <ITable :listData="userList" :propList="propList">
+        <template #status="scope">
+          <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
+        </template>
+        <template #createAt="scope">
+          <el-button>{{ scope.row.createAt }}</el-button>
+        </template>
+        <template #updateAt="scope">
+          <el-button>{{ scope.row.updateAt }}</el-button>
+        </template>
+      </ITable>
       <!-- <el-table :data="userList" stripe style="width: 100%" border>
         <template v-for="propItem in propList" :key="propItem.prop">
           <el-table-column v-bind="propItem" />
@@ -43,9 +53,19 @@ export default defineComponent({
       { prop: 'name', label: '用户名', minWidth: '100' },
       { prop: 'realname', label: '真实姓名', minWidth: '100' },
       { prop: 'cellphone', label: '电话号码', minWidth: '100' },
-      { prop: 'enable', label: '状态', minWidth: '100' },
-      { prop: 'createAt', label: '创建时间', minWidth: '250' },
-      { prop: 'updateAt', label: '更新时间', minWidth: '250' },
+      { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
+      {
+        prop: 'createAt',
+        label: '创建时间',
+        minWidth: '250',
+        slotName: 'createAt',
+      },
+      {
+        prop: 'updateAt',
+        label: '更新时间',
+        minWidth: '250',
+        slotName: 'updateAt',
+      },
       // { prop: 'department', label: '部门ID', minWidth: '100' },
     ]
     return { searchFormConfig, userList, userCount, propList }
