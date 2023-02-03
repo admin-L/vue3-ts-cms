@@ -2,10 +2,11 @@
   <div class="user">
     <div class="search">
       <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
-      <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="date" label="Date" width="180" />
-        <el-table-column prop="name" label="Name" width="180" />
-        <el-table-column prop="address" label="Address" />
+      <el-table :data="userList" stripe style="width: 100%" border table-layout="fixed">
+        <el-table-column type="index" width="100" />
+        <el-table-column prop="departmentId" label="部门id" />
+        <el-table-column prop="name" label="用户名" />
+        <el-table-column prop="cellphone" label="手机号" />
       </el-table>
     </div>
   </div>
