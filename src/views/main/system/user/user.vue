@@ -6,20 +6,25 @@
     <div class="content">
       <ITable :listData="userList" :propList="propList">
         <template #status="scope">
-          <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
+          <el-button
+            size="mini"
+            :type="scope.row.enable ? 'success' : 'danger'"
+            >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+          >
         </template>
-        <template #createAt="scope">
-          <el-button>{{ scope.row.createAt }}</el-button>
+        <!-- <template #createAt="scope">
+          <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
         </template>
         <template #updateAt="scope">
-          <el-button>{{ scope.row.updateAt }}</el-button>
+          <strong>{{ scope.row.updateAt }}</strong>
+        </template> -->
+        <template #createAt="scope">
+          <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
+        </template>
+        <template #updateAt="scope">
+          <strong>{{ $filters.formatTime(scope.row.updateAt) }}</strong>
         </template>
       </ITable>
-      <!-- <el-table :data="userList" stripe style="width: 100%" border>
-        <template v-for="propItem in propList" :key="propItem.prop">
-          <el-table-column v-bind="propItem" />
-        </template>
-      </el-table> -->
     </div>
   </div>
 </template>

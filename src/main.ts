@@ -10,11 +10,14 @@ import 'normalize.css'
 import './assets/css/index.less'
 
 import IRequest from '@/service'
+import { globalRegister } from './global'
 
 const app = createApp(App)
 
+app.use(globalRegister)
 app.use(store)
 setupStore()
+
 app.use(router)
 app.use(ElementPlus)
 app.mount('#app')
