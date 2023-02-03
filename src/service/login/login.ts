@@ -1,5 +1,6 @@
 import IRequest from '../index'
-import { IAcount, IDataType, ILoginResult } from './types'
+import { IAcount, ILoginResult } from './types'
+import { IDataType } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',

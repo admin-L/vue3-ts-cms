@@ -7,26 +7,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import PageSearch from '@/components/page-search'
-import { searchFormConfig } from './config/search.config'
+import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
+import PageSearch from "@/components/page-search";
+import { searchFormConfig } from "./config/search.config";
 
 export default defineComponent({
-  name: 'user',
+  name: "user",
   components: {
     PageSearch,
   },
   setup() {
-    // const formData = ref({
-    //   id: '',
-    //   name: '',
-    //   password: '',
-    //   sport: '',
-    //   createTime: '',
-    // })
-    return { searchFormConfig }
+    const store = useStore()
+    store.dispatch('system/getPageListAction', {
+      pageUrl: 'users/list',
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
+    return { searchFormConfig };
   },
-})
+});
 </script>
 
 <style scoped></style>
