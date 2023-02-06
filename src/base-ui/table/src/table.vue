@@ -1,5 +1,13 @@
 <template>
   <div class="table">
+    <div class="header">
+      <slot name="header">
+        <div class="title">{{ title }}</div>
+        <div class="handler">
+          <slot name="headerHandler"></slot>
+        </div>
+      </slot>
+    </div>
     <el-table
       :data="listData"
       stripe
@@ -31,6 +39,9 @@
         </el-table-column>
       </template>
     </el-table>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
@@ -39,6 +50,10 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: "",
+    },
     listData: {
       type: Array,
       required: true,
@@ -70,3 +85,18 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="less">
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+</style>

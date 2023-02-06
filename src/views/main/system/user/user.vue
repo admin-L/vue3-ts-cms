@@ -6,10 +6,15 @@
     <div class="content">
       <ITable
         :listData="userList"
+        :title="title"
         :propList="propList"
         :showIndexColumn="showIndexColumn"
         :showSelectColumn="showSelectColumn"
       >
+        <template #headerHandler>
+          <el-button>新建用户</el-button>
+          <el-button>刷新</el-button>
+        </template>
         <template #status="scope">
           <el-button
             size="small"
@@ -35,18 +40,19 @@
             <el-button link size="small">删除</el-button>
           </div>
         </template>
+        <template #footer>
+          <!-- v-model:current-page="currentPage4"
+            v-model:page-size="pageSize4" -->
+          <el-pagination
+            :page-sizes="[10, 20, 30, 40]"
+            background
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="userCount"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </template>
       </ITable>
-      <!-- <el-pagination
-        v-model:current-page="currentPage4"
-        v-model:page-size="pageSize4"
-        :page-sizes="[10, 20, 30, 40]"
-        :disabled="disabled"
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="userCount"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      /> -->
     </div>
   </div>
 </template>
@@ -76,6 +82,8 @@ export default defineComponent({
     const userList = computed(() => store.state.system.userList);
     const userCount = computed(() => store.state.system.userCount);
 
+    const title = "用户列表";
+
     const propList = [
       { prop: "name", label: "用户名", minWidth: "100" },
       { prop: "realname", label: "真实姓名", minWidth: "100" },
@@ -98,13 +106,24 @@ export default defineComponent({
     ];
     const showIndexColumn = true;
     const showSelectColumn = true;
+
+    const handleSizeChange = (val: number) => {
+      console.log(val);
+    };
+    const handleCurrentChange = (val: number) => {
+      console.log(val);
+    };
+
     return {
       searchFormConfig,
       userList,
       userCount,
+      title,
       propList,
       showIndexColumn,
       showSelectColumn,
+      handleSizeChange,
+      handleCurrentChange,
     };
   },
 });
