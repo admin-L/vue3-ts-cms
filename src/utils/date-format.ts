@@ -11,3 +11,7 @@ export function formatUtcString(
 ) {
   return dayjs.utc(utcString).format(format)
 }
+
+// export default formatTimestamp(timestamp: number, format: string ) {
+  
+// }

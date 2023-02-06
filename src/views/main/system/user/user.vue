@@ -4,12 +4,17 @@
       <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
     </div>
     <div class="content">
-      <ITable :listData="userList" :propList="propList">
+      <ITable
+        :listData="userList"
+        :propList="propList"
+        :showIndexColumn="showIndexColumn"
+        :showSelectColumn="showSelectColumn"
+      >
         <template #status="scope">
           <el-button
-            size="mini"
+            size="small"
             :type="scope.row.enable ? 'success' : 'danger'"
-            >{{ scope.row.enable ? '启用' : '禁用' }}</el-button
+            >{{ scope.row.enable ? "启用" : "禁用" }}</el-button
           >
         </template>
         <!-- <template #createAt="scope">
@@ -24,58 +29,85 @@
         <template #updateAt="scope">
           <strong>{{ $filters.formatTime(scope.row.updateAt) }}</strong>
         </template>
+        <template #operations>
+          <div class="operations-content">
+            <el-button link size="small">编辑</el-button>
+            <el-button link size="small">删除</el-button>
+          </div>
+        </template>
       </ITable>
+      <!-- <el-pagination
+        v-model:current-page="currentPage4"
+        v-model:page-size="pageSize4"
+        :page-sizes="[10, 20, 30, 40]"
+        :disabled="disabled"
+        background
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="userCount"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      /> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
-import { useStore } from '@/store'
-import PageSearch from '@/components/page-search'
-import ITable from '@/base-ui/table'
-import { searchFormConfig } from './config/search.config'
+import { computed, defineComponent, ref } from "vue";
+import { useStore } from "@/store";
+import PageSearch from "@/components/page-search";
+import ITable from "@/base-ui/table";
+import { searchFormConfig } from "./config/search.config";
 
 export default defineComponent({
-  name: 'user',
+  name: "user",
   components: {
     PageSearch,
     ITable,
   },
   setup() {
-    const store = useStore()
-    store.dispatch('system/getPageListAction', {
-      pageUrl: 'users/list',
+    const store = useStore();
+    store.dispatch("system/getPageListAction", {
+      pageUrl: "users/list",
       queryInfo: {
         offset: 0,
         size: 10,
       },
-    })
-    const userList = computed(() => store.state.system.userList)
-    const userCount = computed(() => store.state.system.userCount)
+    });
+    const userList = computed(() => store.state.system.userList);
+    const userCount = computed(() => store.state.system.userCount);
 
     const propList = [
-      { prop: 'name', label: '用户名', minWidth: '100' },
-      { prop: 'realname', label: '真实姓名', minWidth: '100' },
-      { prop: 'cellphone', label: '电话号码', minWidth: '100' },
-      { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
+      { prop: "name", label: "用户名", minWidth: "100" },
+      { prop: "realname", label: "真实姓名", minWidth: "100" },
+      { prop: "cellphone", label: "电话号码", minWidth: "100" },
+      { prop: "enable", label: "状态", minWidth: "100", slotName: "status" },
       {
-        prop: 'createAt',
-        label: '创建时间',
-        minWidth: '250',
-        slotName: 'createAt',
+        prop: "createAt",
+        label: "创建时间",
+        minWidth: "250",
+        slotName: "createAt",
       },
       {
-        prop: 'updateAt',
-        label: '更新时间',
-        minWidth: '250',
-        slotName: 'updateAt',
+        prop: "updateAt",
+        label: "更新时间",
+        minWidth: "250",
+        slotName: "updateAt",
       },
+      { label: "操作", minWidth: "120", slotName: "operations" },
       // { prop: 'department', label: '部门ID', minWidth: '100' },
-    ]
-    return { searchFormConfig, userList, userCount, propList }
+    ];
+    const showIndexColumn = true;
+    const showSelectColumn = true;
+    return {
+      searchFormConfig,
+      userList,
+      userCount,
+      propList,
+      showIndexColumn,
+      showSelectColumn,
+    };
   },
-})
+});
 </script>
 
 <style scoped>
@@ -85,5 +117,8 @@ export default defineComponent({
 .content {
   margin-top: 20px;
   /* border-top: 20px solid #f0f2f5; */
+}
+.operations-content {
+  display: flex;
 }
 </style>
