@@ -6,7 +6,7 @@
       </template>
       <template #footer>
         <div style="text-align: right">
-          <el-button type="primary">搜索</el-button>
+          <el-button type="primary" @click="handleQuery">搜索</el-button>
           <el-button @click="handleReset">重置</el-button>
         </div>
       </template>
@@ -29,21 +29,27 @@ export default defineComponent({
   components: {
     IForm,
   },
-  setup(props) {
+  emits: ['reset', 'query'],
+  setup(props, { emit }) {
     const formItems = props.searchFormConfig?.formItem ?? []
     const formOriginData: any = {}
-    for(const item of formItems) {
+    for (const item of formItems) {
       formOriginData[item.field] = ''
     }
     // console.log(formItems)
     const formData = ref(formOriginData);
 
+    const handleQuery = () => {
+      emit('query', formData.value)
+    }
+
     const handleReset = () => {
       // console.log(formOriginData)
       // formData.value = formOriginData
       formData.value = formOriginData
+      emit('reset')
     }
-    return { formData, handleReset };
+    return { formData, handleQuery, handleReset };
   },
 });
 </script>

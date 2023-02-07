@@ -1,10 +1,10 @@
 <template>
   <div class="user">
     <div class="search">
-      <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
+      <PageSearch :searchFormConfig="searchFormConfig" @reset="handleReset" @query="handleQuery"></PageSearch>
     </div>
     <div class="content">
-      <PageContent :contentTableConfig="contentTableConfig" :pageName="pageName"></PageContent>
+      <PageContent ref="pageContentRef" :contentTableConfig="contentTableConfig" :pageName="pageName"></PageContent>
     </div>
   </div>
 </template>
@@ -23,12 +23,25 @@ export default defineComponent({
     PageContent,
   },
   setup() {
+
+    const pageContentRef = ref<InstanceType<typeof PageContent>>()
+
     const pageName = 'users'
+
+    const handleReset = () => {
+      pageContentRef.value?.getPageData()
+    }
+    const handleQuery = (params: any) => {
+      pageContentRef.value?.getPageData(params)
+    }
 
     return {
       pageName,
       searchFormConfig,
       contentTableConfig,
+      pageContentRef,
+      handleReset,
+      handleQuery
     };
   },
 });

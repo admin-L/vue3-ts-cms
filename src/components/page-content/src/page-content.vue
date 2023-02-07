@@ -6,11 +6,9 @@
         <el-button>刷新</el-button>
       </template>
       <template #status="scope">
-        <el-button
-          size="small"
-          :type="scope.row.enable ? 'success' : 'danger'"
-          >{{ scope.row.enable ? "启用" : "禁用" }}</el-button
-        >
+        <el-button size="small" :type="scope.row.enable ? 'success' : 'danger'">{{
+          scope.row.enable ? "启用" : "禁用"
+        }}</el-button>
       </template>
       <!-- <template #createAt="scope">
           <strong>{{ $filters.formatTime(scope.row.createAt) }}</strong>
@@ -33,12 +31,8 @@
       <template #footer>
         <!-- v-model:current-page="currentPage4"
             v-model:page-size="pageSize4" -->
-        <el-pagination
-          :page-sizes="[10, 20, 30, 40]"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="userCount"
-        />
+        <el-pagination :page-sizes="[10, 20, 30, 40]" background layout="total, sizes, prev, pager, next, jumper"
+          :total="userCount" />
         <!-- @size-change="handleSizeChange"
           @current-change="handleCurrentChange" -->
       </template>
@@ -67,23 +61,30 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore();
-    store.dispatch("system/getPageListAction", {
-      pageName: props.pageName,
-    //   pageUrl: "users/list",
-      queryInfo: {
-        offset: 0,
-        size: 10,
-      },
-    });
+    const getPageData = (params: any = {}) => {
+      console.log(params)
+      store.dispatch("system/getPageListAction", {
+        pageName: props.pageName,
+        //   pageUrl: "users/list",
+        queryInfo: {
+          offset: 0,
+          size: 10,
+          ...params
+        },
+      });
+    }
+    getPageData()
     const dataList = computed(() => store.getters['system/pageListData'](props.pageName));
     const userCount = computed(() => store.state.system.userCount);
     return {
       dataList,
       userCount,
+      getPageData
     };
   },
 });
 </script>
 
 <style scoped>
+
 </style>
