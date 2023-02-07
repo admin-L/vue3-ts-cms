@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <ITable :listData="userList" v-bind="contentTableConfig">
+    <ITable :listData="dataList" v-bind="contentTableConfig">
       <template #headerHandler>
         <el-button>新建用户</el-button>
         <el-button>刷新</el-button>
@@ -75,10 +75,10 @@ export default defineComponent({
         size: 10,
       },
     });
-    const userList = computed(() => store.state.system.userList);
+    const dataList = computed(() => store.getters['system/pageListData'](props.pageName));
     const userCount = computed(() => store.state.system.userCount);
     return {
-      userList,
+      dataList,
       userCount,
     };
   },

@@ -27,6 +27,17 @@ const systemModule: Module<ISystemState, IRootState> = {
             state.userCount = roleCount
         }
     },
+    getters: {
+        pageListData(state) {
+            return (pageName: string) => {
+                if (pageName === 'users') {
+                    return state.userList
+                } else if (pageName === 'role') {
+                    return state.roleList
+                }
+            }
+        }
+    },
     actions: {
         async getPageListAction({ commit }, payload: any) {
             const pageName = payload.pageName

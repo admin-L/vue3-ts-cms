@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import IForm from '@/base-ui/form'
+import { defineComponent, ref } from "vue";
+import IForm from "@/base-ui/form";
 
 export default defineComponent({
-  name: 'user',
+  name: "user",
   props: {
     searchFormConfig: {
       type: Object,
@@ -31,15 +31,19 @@ export default defineComponent({
   },
   setup() {
     const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: '',
-    })
-    return { formData }
+      id: "",
+      name: "",
+      password: "",
+      sport: "",
+      createTime: "",
+    });
+    return { formData };
   },
-})
+});
 </script>
 
-<style scoped></style>
+<style scoped>
+.page-search {
+  margin-bottom: 22px;
+}
+</style>
