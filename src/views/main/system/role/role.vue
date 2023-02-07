@@ -1,18 +1,31 @@
 <template>
   <div class="role">
-    <h2>role</h2>
+    <PageContent
+      :contentTableConfig="contentTableConfig"
+      :pageName="pageName"
+    ></PageContent>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
+
+import PageContent from "@/components/page-content";
+import { contentTableConfig } from "./config/content.config";
 
 export default defineComponent({
-  name: 'role',
+  name: "role",
+  components: {
+    PageContent,
+  },
   setup() {
-    return {}
-  }
-})
+    const pageName = "role";
+    return {
+      pageName,
+      contentTableConfig,
+    };
+  },
+});
 </script>
 
 <style scoped></style>

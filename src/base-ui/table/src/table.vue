@@ -71,7 +71,7 @@ export default defineComponent({
       default: false,
     },
   },
-  setup() {
+  setup(props) {
     // const handleScope = (scope: any) => {
     //   console.log(scope)
     // }
