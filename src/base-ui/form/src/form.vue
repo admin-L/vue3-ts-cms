@@ -21,14 +21,16 @@
                 :placeholder="item.placeholder"
                 :show-password="item.type === 'password'"
                 v-bind="item.otherOptions"
-                v-model="formData[item.field]"
+                v-model="modelValue[item.field]"
+                @update:modelValue="handleValueChange($event, item.field)"
               ></el-input>
             </template>
             <template v-else-if="item.type === 'select'">
               <el-select
                 :placeholder="item.placeholder"
                 style="width: 100%"
-                v-model="formData[item.field]"
+                v-model="modelValue[item.field]"
+                @update:modelValue="handleValueChange($event, item.field)"
               >
                 <el-option
                   v-bind="item.otherOptions"
@@ -43,7 +45,8 @@
               <el-date-picker
                 v-bind="item.otherOptions"
                 style="width: 100%"
-                v-model="formData[item.field]"
+                v-model="modelValue[item.field]"
+                @update:modelValue="handleValueChange($event, item.field)"
               ></el-date-picker>
             </template>
           </el-form-item>
@@ -104,11 +107,23 @@ export default defineComponent({
     //   },
     // });
     const formData = ref({ ...props.modelValue });
+    watch(
+      () => props.modelValue,
+      (newValue) => {
+        console.log(newValue);
+        formData.value = { ...props.modelValue };
+      }
+    );
     watch(formData, (newValue) => emit("update:modelValue", newValue), {
       deep: true,
     });
+
+    const handleValueChange = (value: any, field: string) => {
+      emit("update:modelValue", { ...props.modelValue, [field]: value });
+    };
     return {
       formData,
+      handleValueChange
     };
   },
 });

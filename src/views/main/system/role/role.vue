@@ -33,4 +33,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.role {
+  padding: 20px;
+}
+</style>
