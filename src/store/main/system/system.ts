@@ -13,6 +13,8 @@ const systemModule: Module<ISystemState, IRootState> = {
             roleCount: 0,
             goodsList: [],
             goodsCount: 0,
+            menuList: [],
+            menuCount: 0,
         }
     },
     mutations: {
@@ -33,6 +35,12 @@ const systemModule: Module<ISystemState, IRootState> = {
         },
         changeGoodsCount(state, goodsCount: number) {
             state.goodsCount = goodsCount
+        },
+        changeMenuList(state, menuList: any[]) {
+            state.menuList = menuList
+        },
+        changeMenuCount(state, menuCount: number) {
+            state.menuCount = menuCount
         }
     },
     getters: {
@@ -44,6 +52,8 @@ const systemModule: Module<ISystemState, IRootState> = {
                     return state.roleList
                 } else if (pageName === 'goods') {
                     return state.goodsList
+                } else if (pageName === 'menu') {
+                    return state.menuList
                 }
             }
         },
@@ -55,6 +65,8 @@ const systemModule: Module<ISystemState, IRootState> = {
                     return state.roleCount
                 } else if (pageName === 'goods') {
                     return state.goodsCount
+                } else if (pageName === 'menu') {
+                    return state.menuCount
                 }
             }
         }
@@ -71,9 +83,12 @@ const systemModule: Module<ISystemState, IRootState> = {
             } else if (pageName === 'role') {
                 commit('changeRoleList', list)
                 commit('changeRoleCount', totalCount)
-            } else if(pageName === 'goods') {
+            } else if (pageName === 'goods') {
                 commit('changeGoodsList', list)
                 commit('changeGoodsCount', totalCount)
+            } else if (pageName === 'menu') {
+                commit('changeMenuList', list)
+                commit('changeMenuCount', totalCount)
             }
         }
     }

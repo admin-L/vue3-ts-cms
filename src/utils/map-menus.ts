@@ -49,14 +49,29 @@ export function pathMapToMenu(userMenus: any[], currentPath: string, breadcrumbs
       if (findMenu) {
         // breadcrumbs?.push({name: menu.name, path: menu.url})
         // breadcrumbs?.push({name: findMenu.name, path: findMenu.url})
-        breadcrumbs?.push({name: menu.name})
-        breadcrumbs?.push({name: findMenu.name})
+        breadcrumbs?.push({ name: menu.name })
+        breadcrumbs?.push({ name: findMenu.name })
         return findMenu
       }
     } else if (menu.type === 2 && menu.url === currentPath) {
       return menu
     }
   }
+}
+
+export function mapMenusToPermission(userMenus: any[]) {
+  const permission: string[] = []
+  const _recurseGetPermission = (menus: any[]) => {
+    for(const menu of menus) {
+      if(menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else if(menu.type === 3) {
+        permission.push(menu.permission)
+      }
+    }
+  }
+  _recurseGetPermission(userMenus)
+  return permission
 }
 
 export { firstMenu }

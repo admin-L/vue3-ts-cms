@@ -6,11 +6,11 @@
       :pageName="pageName"
     >
       <template #image="scope">
-        <!-- <el-image
+        <el-image
           :src="scope.row.imgUrl"
           :preview-src-list="[scope.row.imgUrl]"
-        ></el-image> -->
-        <span>123</span>
+        ></el-image>
+        <!-- <span>123</span> -->
       </template>
     </PageContent>
   </div>
