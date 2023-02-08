@@ -13,6 +13,7 @@
       stripe
       style="width: 100%"
       border
+      v-model:page="pageInfo"
       @selection-change="handleSelectionChange"
     >
       <el-table-column
@@ -29,7 +30,7 @@
         align="center"
       />
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <!-- <el-button>{{ scope.row[propItem.prop] }}</el-button> -->
             <slot :name="propItem.slotName" :row="scope.row">
@@ -40,7 +41,16 @@
       </template>
     </el-table>
     <div class="footer">
-      <slot name="footer"></slot>
+      <slot name="footer">
+        <el-pagination
+          :current-page="page.currentPage"
+          :page-size="page.pageSize"
+          :page-sizes="[10, 20, 30]"
+          background
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listCount"
+        />
+      </slot>
     </div>
   </div>
 </template>
@@ -58,6 +68,10 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    listCount: {
+      type: Number,
+      default: 0,
+    },
     propList: {
       type: Array,
       required: true,
@@ -70,16 +84,31 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 }),
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
     // const handleScope = (scope: any) => {
     //   console.log(scope)
     // }
     const handleSelectionChange = (value: any) => {
       console.log(value);
     };
+
+    const handleCurrentChange = (currentPage: number) => {
+      emit("update:page", { ...props.page, currentPage });
+    };
+
+    const handleSizeChange = (pageSize: number) => {
+      emit("update:page", { ...props.page, pageSize });
+    };
+
     return {
       handleSelectionChange,
+      handleCurrentChange,
+      handleSizeChange
       // handleScope,
     };
   },

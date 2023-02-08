@@ -1,10 +1,18 @@
 <template>
   <div class="user">
     <div class="search">
-      <PageSearch :searchFormConfig="searchFormConfig" @reset="handleReset" @query="handleQuery"></PageSearch>
+      <PageSearch
+        :searchFormConfig="searchFormConfig"
+        @reset="handleReset"
+        @query="handleQuery"
+      ></PageSearch>
     </div>
     <div class="content">
-      <PageContent ref="pageContentRef" :contentTableConfig="contentTableConfig" :pageName="pageName"></PageContent>
+      <PageContent
+        ref="pageContentRef"
+        :contentTableConfig="contentTableConfig"
+        :pageName="pageName"
+      ></PageContent>
     </div>
   </div>
 </template>
@@ -16,6 +24,8 @@ import PageContent from "@/components/page-content";
 import { searchFormConfig } from "./config/search.config";
 import { contentTableConfig } from "./config/content.config";
 
+import { usePageSearch } from "@/hooks/use-page-search";
+
 export default defineComponent({
   name: "user",
   components: {
@@ -24,21 +34,14 @@ export default defineComponent({
   },
   setup() {
 
-    const pageContentRef = ref<InstanceType<typeof PageContent>>()
-
-    const pageName = 'users'
-
-    const handleReset = () => {
-      pageContentRef.value?.getPageData()
-    }
-    const handleQuery = (params: any) => {
-      pageContentRef.value?.getPageData(params)
-    }
+    const pageName = "users";
+    const [pageContentRef, handleReset, handleQuery] = usePageSearch()
 
     return {
       pageName,
       searchFormConfig,
       contentTableConfig,
+      // ...usePageSearch()
       pageContentRef,
       handleReset,
       handleQuery
